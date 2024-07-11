@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip.tsx";
-import { Button } from "@/components/ui/button.tsx";
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 import { Book, Bot, Code2, Settings2, SquareTerminal } from "lucide-react";
 
 export const MainNavigation = () => {

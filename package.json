@@ -2,7 +2,6 @@
   "name": "drama-llm",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,6 +10,7 @@
     "format": "prettier --write **/*.{ts,tsx,md}"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.1",

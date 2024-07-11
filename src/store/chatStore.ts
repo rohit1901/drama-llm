@@ -1,19 +1,36 @@
 import { create } from "zustand";
-import ollama from "ollama";
-
+import ollama from 'ollama/browser'
 type Message = {
   type: "question" | "answer";
   content: string;
 };
+type ChatSettings = {
+    role: string;
+    model: string;
+    temperature: number;
+    topP: number;
+    topK: number;
+};
 type ChatStore = {
     loading: boolean;
     setLoading: (loading: boolean) => void;
-  messages: Message[];
+    messages: Message[];
     addMessage: (message: Message) => void;
+    settings: ChatSettings;
+    setSettings: (settings: ChatSettings) => void;
 };
 export const useChatStore = create<ChatStore>((set, get) => ({
     loading: false,
     messages: [],
+    settings: {
+        model: "llama3",
+        temperature: 0.4,
+        topP: 0.7,
+        topK: 0.0,
+    },
+    setSettings: (settings) => {
+        set({ settings });
+    },
     setLoading: (loading) => {
         set({ loading });
     },

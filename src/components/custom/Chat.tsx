@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -13,6 +12,8 @@ import { ChangeEvent, useState } from "react";
 import { isFieldEmpty } from "@/lib/utils";
 import { LoadingButton } from "@/components/custom/Loader";
 import { useChatStore } from "@/store/chatStore";
+import {Bubble} from "@/components/custom/Bubble.tsx";
+
 
 export const Chat = () => {
   const [message, setMessage] = useState("");
@@ -25,17 +26,7 @@ export const Chat = () => {
   return (
     <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
       {chatStore.messages.map((message, index) => (
-        <div
-          key={index}
-          className={`flex flex-col items-${message.type === "question" ? "start" : "end"}`}
-        >
-          <Badge className="mb-2">
-            {message.type === "question" ? "You" : "AI"}
-          </Badge>
-          <p className="p-3 bg-neutral rounded-lg shadow-sm">
-            {message.content}
-          </p>
-        </div>
+          <Bubble type={message.type} message={message.content} key={`${message.type}-${index}`}/>
       ))}
       <div className="flex-1" />
       <div

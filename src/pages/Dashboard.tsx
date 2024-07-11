@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Chat } from "@/components/custom/Chat";
-import { AvailableModels } from "@/components/custom/AvailableModels.tsx";
-import { MainNavigation } from "@/components/custom/MainNavigation.tsx";
-import { BottomNavigation } from "@/components/custom/BottomNavigation.tsx";
+import { AvailableModels } from "@/components/custom/AvailableModels";
+import { MainNavigation } from "@/components/custom/MainNavigation";
+import { BottomNavigation } from "@/components/custom/BottomNavigation";
+import {ChatSettings} from "@/components/custom/ChatSettings.tsx";
 
 export function Dashboard() {
   return (
@@ -30,7 +31,7 @@ export function Dashboard() {
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
         <div className="border-b p-2">
           <Button variant="outline" size="icon" aria-label="Home">
-            <Triangle className="size-5 fill-foreground" />
+            <Triangle className="size-5 fill-foreground" color="bg-primary"/>
           </Button>
         </div>
         <MainNavigation />
@@ -102,7 +103,7 @@ export function Dashboard() {
             size="sm"
             className="ml-auto gap-1.5 text-sm"
           >
-            <Share className="size-3.5" />
+            <Share className="size-3.5"/>
             Share
           </Button>
         </header>
@@ -111,54 +112,7 @@ export function Dashboard() {
             className="relative hidden flex-col items-start gap-8 md:flex"
             x-chunk="dashboard-03-chunk-0"
           >
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Settings
-                </legend>
-                <AvailableModels />
-                <div className="grid gap-3">
-                  <Label htmlFor="temperature">Temperature</Label>
-                  <Input id="temperature" type="number" placeholder="0.4" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-3">
-                    <Label htmlFor="top-p">Top P</Label>
-                    <Input id="top-p" type="number" placeholder="0.7" />
-                  </div>
-                  <div className="grid gap-3">
-                    <Label htmlFor="top-k">Top K</Label>
-                    <Input id="top-k" type="number" placeholder="0.0" />
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
-                </legend>
-                <div className="grid gap-3">
-                  <Label htmlFor="role">Role</Label>
-                  <Select defaultValue="system">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="system">System</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="content">Content</Label>
-                  <Textarea
-                    id="content"
-                    placeholder="You are a..."
-                    className="min-h-[9.5rem]"
-                  />
-                </div>
-              </fieldset>
-            </form>
+            <ChatSettings />
           </div>
           <Chat />
         </main>

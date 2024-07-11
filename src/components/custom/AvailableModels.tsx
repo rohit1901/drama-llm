@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label.tsx";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select.tsx";
+} from "@/components/ui/select";
 import { Rabbit } from "lucide-react";
-import { Model, Tags } from "@/types/ollama.ts";
-
+import { Model, Tags } from "@/types/ollama";
+import {useChatStore} from "@/store/chatStore.ts";
 export const AvailableModels = () => {
   const [models, setModels] = useState<string[]>([]);
+  const { settings, setModel } = useChatStore((state) => ({
+    settings: state.settings,
+    setModel: state.setSettings,
+  }));
   useEffect(() => {
     fetch("http://localhost:11434/api/tags")
       .then((response) => {
@@ -28,7 +32,7 @@ export const AvailableModels = () => {
   return (
     <div className="grid gap-3">
       <Label htmlFor="model">Model</Label>
-      <Select>
+      <Select onValueChange={(value) => setModel({ ...settings, model: value })}>
         <SelectTrigger
           id="model"
           className="items-start [&_[data-description]]:hidden"
@@ -37,7 +41,7 @@ export const AvailableModels = () => {
         </SelectTrigger>
         <SelectContent>
           {models?.map((model) => (
-            <SelectItem value="genesis" key={model}>
+            <SelectItem value={model} key={model}>
               <div className="flex items-start gap-3 text-muted-foreground">
                 <Rabbit className="size-5" />
                 <div className="grid gap-0.5">
