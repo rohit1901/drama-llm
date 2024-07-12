@@ -23,6 +23,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     loading: false,
     messages: [],
     settings: {
+        role: "user",
         model: "llama3",
         temperature: 0.4,
         topP: 0.7,
@@ -35,6 +36,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         set({ loading });
     },
     addMessage: async (message) => {
+        console.log(get().settings.model)
         set({ loading: true });
         // Add the message to the store
         set({
@@ -44,11 +46,16 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         if (message.type === "question") {
             const response = await ollama
                 .chat({
-                    model: "llama3",
+                    model: get().settings.model,
                     messages: get().messages.filter(message => message.type === "question")?.map((question) => ({
-                        role: "user",
+                        role: get().settings.role,
                         content: question.content,
                     })),
+                    options: {
+                        temperature: get().settings.temperature,
+                        top_p: get().settings.topP,
+                        top_k: get().settings.topK,
+                    }
                 })
             // Add the response to the store after the chatbot responds
             set({

@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/select";
 import { Rabbit } from "lucide-react";
 import { Model, Tags } from "@/types/ollama";
-import {useChatStore} from "@/store/chatStore.ts";
+import {useChatStore} from "@/store/chatStore";
+import {useShallow} from "zustand/react/shallow";
 export const AvailableModels = () => {
   const [models, setModels] = useState<string[]>([]);
-  const { settings, setModel } = useChatStore((state) => ({
-    settings: state.settings,
-    setModel: state.setSettings,
-  }));
+    const { settings, setSettings } = useChatStore(useShallow((state) => ({
+        settings: state.settings,
+        setSettings: state.setSettings,
+    })));
   useEffect(() => {
     fetch("http://localhost:11434/api/tags")
       .then((response) => {
@@ -23,7 +24,12 @@ export const AvailableModels = () => {
         return response.json();
       })
       .then((data: Tags) => {
-        setModels(data.models.map((obj: Model) => obj.model));
+        const mappedModels = data.models.map((obj: Model) => obj.model)
+        if (mappedModels.length === 0) {
+          throw new Error("No models found");
+        }
+        setModels(mappedModels);
+        setSettings({ ...settings, model: mappedModels[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -32,7 +38,13 @@ export const AvailableModels = () => {
   return (
     <div className="grid gap-3">
       <Label htmlFor="model">Model</Label>
-      <Select onValueChange={(value) => setModel({ ...settings, model: value })}>
+      <Select
+        onValueChange={(value) => {
+          if (!value || value === "") return;
+          setSettings({ ...settings, model: value });
+        }}
+        value={models[0]}
+      >
         <SelectTrigger
           id="model"
           className="items-start [&_[data-description]]:hidden"

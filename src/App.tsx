@@ -1,6 +1,6 @@
 import { Dashboard } from "@/pages/Dashboard";
 import { useAppStore } from "@/store/appStore";
-import { UserLogin } from "@/pages/UserLogin.tsx";
+import { UserLogin } from "@/pages/UserLogin";
 
 const App = () => {
   const isAuthenticated = useAppStore().authenticated;

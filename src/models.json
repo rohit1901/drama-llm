@@ -1,0 +1,72 @@
+[
+  {
+    "model": "llama",
+    "size": "4.7GB",
+    "name": "llama"
+  },
+  {
+    "model": "llama",
+    "size": "40GB",
+    "name": "llama:70b"
+  },
+  {
+    "model": "phi3",
+    "size": "2.3GB",
+    "name": "phi3"
+  },
+  {
+    "model": "phi3",
+    "size": "7.9GB",
+    "name": "phi3:medium"
+  },
+  {
+    "model": "gemma2",
+    "size": "5.5GB",
+    "name": "gemma2"
+  },
+  {
+    "model": "gemma2",
+    "size": "16GB",
+    "name": "gemma2:27b"
+  },
+  {
+    "model": "mistral",
+    "size": "4.1GB",
+    "name": "mistral"
+  },
+  {
+    "model": "moondream2",
+    "size": "829MB",
+    "name": "moondream"
+  },
+  {
+    "model": "neural-chat",
+    "size": "4.1GB",
+    "name": "neural-chat"
+  },
+  {
+    "model": "starling-lm",
+    "size": "4.1GB",
+    "name": "starling-lm"
+  },
+  {
+    "model": "code-llama",
+    "size": "3.8GB",
+    "name": "codellama"
+  },
+  {
+    "model": "llama2-uncensored",
+    "size": "3.8GB",
+    "name": "llama2-uncensored"
+  },
+  {
+    "model": "llava",
+    "size": "4.5GB",
+    "name": "llava"
+  },
+  {
+    "model": "solar",
+    "size": "6.1GB",
+    "name": "solar"
+  }
+]
