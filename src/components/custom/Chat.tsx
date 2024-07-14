@@ -4,9 +4,10 @@ import { useChatStore } from "@/store/chatStore";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Mic, Paperclip } from "lucide-react";
+import { Mic, Paperclip} from "lucide-react";
 import { LoadingButton } from "@/components/custom/Loader";
 import { isFieldEmpty } from "@/lib/utils";
+import {NoMessages} from "@/components/custom/NoMessages.tsx";
 
 export const Chat = () => {
   const [message, setMessage] = useState("");
@@ -37,14 +38,15 @@ export const Chat = () => {
   };
 
   return (
-      <div className="relative flex flex-col rounded-xl bg-muted/50 p-4 mb-4 lg:col-span-2">
-        <div className="flex flex-col h-full min-h-[50vh] overflow-y-auto">
+      <div className="flex-1 p:6 sm:p-4 justify-between flex flex-col max-h-[90vh] min-h-[50vh] bg-muted overflow-hidden rounded-lg">
+        <div className="overflow-y-auto m-1" ref={messagesEndRef}>
+            {chatStore.messages.length === 0 && <NoMessages />}
           {chatStore.messages.map((message, index) => (
               <ChatBubble type={message.type} message={message.content} key={`${message.type}-${index}`} />
           ))}
         </div>
         <div
-            className="absolute bottom-0 mx-4 mb-4 inset-x-0 rounded-lg border bg-background mt-4"
+            className="mx-1 my-2 inset-x-0 rounded-lg border bg-background"
             x-chunk="dashboard-03-chunk-1"
         >
           <Label htmlFor="message" className="sr-only">
@@ -53,7 +55,7 @@ export const Chat = () => {
           <Textarea
               id="message"
               placeholder="Type your message here..."
-              className="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
+              className="min-h-12 resize-none border-none p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
               value={message}
               onChange={handleTextareaChange}
               onKeyDown={(e) => {

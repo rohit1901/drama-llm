@@ -20,8 +20,10 @@ export const LoadingButton = ({
       disabled={disabled}
     >
       {loading && <LoaderPinwheel className="animate-spin h-5 w-5 mr-3" />}
-      <p>Send Message</p>
-      <CornerDownLeft className="size-3.5" />
+      {!loading && <>
+        <p>Send Message</p>
+        <CornerDownLeft className="size-3.5" />
+      </>}
     </Button>
   );
 };
