@@ -1,5 +1,5 @@
 import {ChangeEvent, useEffect, useRef, useState} from "react";
-import { ChatBubble } from "@/components/custom/ChatBubble.tsx";
+import { ChatBubble } from "@/components/custom/ChatBubble";
 import { useChatStore } from "@/store/chatStore";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Mic, Paperclip} from "lucide-react";
 import { LoadingButton } from "@/components/custom/Loader";
 import { isFieldEmpty } from "@/lib/utils";
-import {NoMessages} from "@/components/custom/NoMessages.tsx";
+import {NoMessages} from "@/components/custom/NoMessages";
 
 export const Chat = () => {
   const [message, setMessage] = useState("");
@@ -40,8 +40,7 @@ export const Chat = () => {
   return (
       <div className="flex-1 p:6 sm:p-4 justify-between flex flex-col max-h-[90vh] min-h-[50vh] bg-muted overflow-hidden rounded-lg">
         <div className="overflow-y-auto m-1" ref={messagesEndRef}>
-            {chatStore.messages.length === 0 && <NoMessages />}
-          {chatStore.messages.map((message, index) => (
+            {chatStore.messages.length === 0 ? <NoMessages />: chatStore.messages.map((message, index) => (
               <ChatBubble type={message.type} message={message.content} key={`${message.type}-${index}`} />
           ))}
         </div>

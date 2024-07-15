@@ -5,12 +5,12 @@ import { Chat } from "@/components/custom/Chat";
 import { MainNavigation } from "@/components/custom/MainNavigation";
 import { BottomNavigation } from "@/components/custom/BottomNavigation";
 import { ChatSettings } from "@/components/custom/ChatSettings";
-import { Header } from "@/components/custom/Header.tsx";
+import { Header } from "@/components/custom/Header";
 
 export function Dashboard() {
   return (
-    <div className="grid w-full pl-[56px] h-[100vh] overflow-hidden">
-      <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
+    <div className="grid w-full pl-[56px] h-[100vh] overflow-hidden bg-background text-base dark:text-white">
+      <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
         <div className="border-b p-2">
           <Button variant="outline" size="icon" aria-label="Home">
             <Origami className="size-5 fill-primary" color="bg-primary" />

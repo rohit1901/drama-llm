@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {useAppStore} from "@/store/appStore";
 import {SIWE} from "@/components/custom/SIWE";
-import {Separator} from "@/components/ui/separator.tsx";
+import {Separator} from "@/components/ui/separator";
 import {Origami} from "lucide-react";
 
 export function UserLogin() {
@@ -24,7 +24,7 @@ export function UserLogin() {
                         <Origami className="w-8 h-8 mr-2 fill-primary"/>
                         <div className="flex justify-between">
                             <p>Login to</p>
-                            <pre className="ml-2 text-primary">drama-gpt</pre>
+                            <pre className="ml-2 text-primary">drama-llm</pre>
                         </div>
                     </CardTitle>
                     <CardDescription>

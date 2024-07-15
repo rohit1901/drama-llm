@@ -21,16 +21,15 @@ export const formatDate = (date?: string, time = true) => {
   });
 
   return formatter.format(convertedDate);
-}
-/**
- * Copy the current URL to the clipboard.
- */
-export const handleCopyUrl = async () => {
-  try {
-    const url = window.location.href; // Get the current URL
-    await navigator.clipboard.writeText(url); // Copy the URL to the clipboard
-  } catch (error) {
-    console.error("Failed to copy the URL: ", error);
-    // Optionally, handle the error case, e.g., by showing an error toast
-  }
 };
+/**
+ * Copy text to clipboard
+ * @param text {string} - The text to copy to clipboard
+ */
+export const copyToClipboard = async (text: string) => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (error) {
+        console.error("Failed to copy text: ", error);
+    }
+}
