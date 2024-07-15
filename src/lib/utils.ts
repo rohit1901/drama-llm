@@ -11,13 +11,13 @@ export const formatDate = (date?: string, time = true) => {
   // Create a new Date object
   const convertedDate = new Date(date ?? new Date());
 
-// Create an Intl.DateTimeFormat instance with desired options
-  const formatter = new Intl.DateTimeFormat('en-DE', {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-    hour: time ? 'numeric' : undefined,
-    minute: time ? 'numeric' : undefined,
+  // Create an Intl.DateTimeFormat instance with desired options
+  const formatter = new Intl.DateTimeFormat("en-DE", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: time ? "numeric" : undefined,
+    minute: time ? "numeric" : undefined,
   });
 
   return formatter.format(convertedDate);
@@ -27,9 +27,9 @@ export const formatDate = (date?: string, time = true) => {
  * @param text {string} - The text to copy to clipboard
  */
 export const copyToClipboard = async (text: string) => {
-    try {
-        await navigator.clipboard.writeText(text);
-    } catch (error) {
-        console.error("Failed to copy text: ", error);
-    }
-}
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (error) {
+    console.error("Failed to copy text: ", error);
+  }
+};
