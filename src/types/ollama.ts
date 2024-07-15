@@ -17,3 +17,7 @@ export type ModelDetails = {
 export type Tags = {
   models: Model[];
 };
+export type Route = {
+  path: string;
+  value: string;
+};

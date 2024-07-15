@@ -21,11 +21,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { CopyToClipboard } from "@/components/custom/CopyToClipboard";
 import {ModeToggle} from "@/components/custom/ThemeToggle";
+import {useLocation} from "boom-router";
+import {routes} from "@/lib/routes.ts";
 
 export const Header = () => {
+  const [location] = useLocation();
   return (
     <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
-      <h1 className="text-xl font-semibold">Playground</h1>
+      <h1 className="text-xl font-semibold">{routes.find(route => route.path === location)?.value}</h1>
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="ghost" size="icon" className="lg:hidden">

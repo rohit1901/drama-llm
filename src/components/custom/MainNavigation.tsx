@@ -6,8 +6,10 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Book, Bot, Code2, Settings2, SquareTerminal } from "lucide-react";
+import { useLocation } from "boom-router";
 
 export const MainNavigation = () => {
+  const [location, setLocation] = useLocation();
   return (
     <nav className="grid gap-1 p-2">
       <TooltipProvider>
@@ -16,10 +18,13 @@ export const MainNavigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg bg-muted"
+              className={`rounded-lg ${location === "/chat" ? "bg-muted" : ""}`}
               aria-label="Playground"
             >
-              <SquareTerminal className="size-5" />
+              <SquareTerminal
+                className="size-5"
+                onClick={() => setLocation("/chat")}
+              />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
@@ -33,10 +38,10 @@ export const MainNavigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg ${location === "/models" ? "bg-muted" : ""}`}
               aria-label="Models"
             >
-              <Bot className="size-5" />
+              <Bot className="size-5" onClick={() => setLocation("/models")} />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
@@ -50,7 +55,7 @@ export const MainNavigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg`}
               aria-label="API"
             >
               <Code2 className="size-5" />
@@ -67,7 +72,7 @@ export const MainNavigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg`}
               aria-label="Documentation"
             >
               <Book className="size-5" />
@@ -84,7 +89,7 @@ export const MainNavigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className={`rounded-lg`}
               aria-label="Settings"
             >
               <Settings2 className="size-5" />

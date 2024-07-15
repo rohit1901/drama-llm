@@ -1,0 +1,338 @@
+[
+  {
+    "model": "gemma2",
+    "name": "Google Gemma 2"
+  },
+  {
+    "model": "llama3",
+    "name": "Meta Llama 3"
+  },
+  {
+    "model": "qwen2",
+    "name": "Qwen2"
+  },
+  {
+    "model": "deepseek-coder-v2",
+    "name": "DeepSeek Coder V2"
+  },
+  {
+    "model": "phi3",
+    "name": "Phi-3"
+  },
+  {
+    "model": "aya",
+    "name": "Aya 23"
+  },
+  {
+    "model": "mistral",
+    "name": "Mistral"
+  },
+  {
+    "model": "mixtral",
+    "name": "Mixtral"
+  },
+  {
+    "model": "codegemma",
+    "name": "CodeGemma"
+  },
+  {
+    "model": "command-r",
+    "name": "Command R"
+  },
+  {
+    "model": "command-r-plus",
+    "name": "Command R+"
+  },
+  {
+    "model": "llava",
+    "name": "LLaVA"
+  },
+  {
+    "model": "gemma",
+    "name": "Gemma"
+  },
+  {
+    "model": "qwen",
+    "name": "Qwen 1.5"
+  },
+  {
+    "model": "llama2",
+    "name": "Llama 2"
+  },
+  {
+    "model": "codellama",
+    "name": "CodeLlama"
+  },
+  {
+    "model": "dolphin-mixtral",
+    "name": "Dolphin Mixtral"
+  },
+  {
+    "model": "llama2-uncensored",
+    "name": "Llama 2 Uncensored"
+  },
+  {
+    "model": "nomic-embed-text",
+    "name": "Nomic Embed Text"
+  },
+  {
+    "model": "deepseek-coder",
+    "name": "DeepSeek Coder"
+  },
+  {
+    "model": "phi",
+    "name": "Phi-2"
+  },
+  {
+    "model": "dolphin-mistral",
+    "name": "Dolphin Mistral"
+  },
+  {
+    "model": "orca-mini",
+    "name": "Orca Mini"
+  },
+  {
+    "model": "mistral-openorca",
+    "name": "Mistral OpenOrca"
+  },
+  {
+    "model": "dolphin-llama3",
+    "name": "Dolphin Llama 3"
+  },
+  {
+    "model": "mxbai-embed-large",
+    "name": "MXBAI Embed Large"
+  },
+  {
+    "model": "starcoder2",
+    "name": "StarCoder2"
+  },
+  {
+    "model": "zephyr",
+    "name": "Zephyr"
+  },
+  {
+    "model": "llama2-chinese",
+    "name": "Llama 2 Chinese"
+  },
+  {
+    "model": "yi",
+    "name": "Yi 1.5"
+  },
+  {
+    "model": "llava-llama3",
+    "name": "LLaVA Llama 3"
+  },
+  {
+    "model": "nous-hermes2",
+    "name": "Nous Hermes 2"
+  },
+  {
+    "model": "vicuna",
+    "name": "Vicuna"
+  },
+  {
+    "model": "wizard-vicuna-uncensored",
+    "name": "Wizard Vicuna Uncensored"
+  },
+  {
+    "model": "tinyllama",
+    "name": "TinyLlama"
+  },
+  {
+    "model": "starcoder",
+    "name": "StarCoder"
+  },
+  {
+    "model": "codestral",
+    "name": "Codestral"
+  },
+  {
+    "model": "wizardlm2",
+    "name": "WizardLM2"
+  },
+  {
+    "model": "openchat",
+    "name": "OpenChat"
+  },
+  {
+    "model": "tinydolphin",
+    "name": "TinyDolphin"
+  },
+  {
+    "model": "openhermes",
+    "name": "OpenHermes"
+  },
+  {
+    "model": "wizardcoder",
+    "name": "WizardCoder"
+  },
+  {
+    "model": "stable-code",
+    "name": "Stable Code"
+  },
+  {
+    "model": "neural-chat",
+    "name": "Neural Chat"
+  },
+  {
+    "model": "codeqwen",
+    "name": "CodeQwen"
+  },
+  {
+    "model": "wizard-math",
+    "name": "Wizard Math"
+  },
+  {
+    "model": "stablelm2",
+    "name": "StableLM2"
+  },
+  {
+    "model": "all-minilm",
+    "name": "All MiniLM"
+  },
+  {
+    "model": "phind-codellama",
+    "name": "Phind CodeLlama"
+  },
+  {
+    "model": "dolphincoder",
+    "name": "DolphinCoder"
+  },
+  {
+    "model": "nous-hermes",
+    "name": "Nous Hermes"
+  },
+  {
+    "model": "granite-code",
+    "name": "Granite Code"
+  },
+  {
+    "model": "sqlcoder",
+    "name": "SQLCoder"
+  },
+  {
+    "model": "starling-lm",
+    "name": "Starling LM"
+  },
+  {
+    "model": "llama3-gradient",
+    "name": "Llama 3 Gradient"
+  },
+  {
+    "model": "falconArchive",
+    "name": "Falcon Archive"
+  },
+  {
+    "model": "deepseek-llm",
+    "name": "DeepSeek LLM"
+  },
+  {
+    "model": "yarn-llama2",
+    "name": "Yarn Llama 2"
+  },
+  {
+    "model": "orca2",
+    "name": "Orca 2"
+  },
+  {
+    "model": "llama3-chatqa",
+    "name": "Llama 3 ChatQA"
+  },
+  {
+    "model": "xwinlm",
+    "name": "XwinLM"
+  },
+  {
+    "model": "solar",
+    "name": "Solar"
+  },
+  {
+    "model": "wizardlm",
+    "name": "WizardLM"
+  },
+  {
+    "model": "samantha-mistral",
+    "name": "Samantha Mistral"
+  },
+  {
+    "model": "dolphin-phi",
+    "name": "Dolphin Phi"
+  },
+  {
+    "model": "stable-beluga",
+    "name": "Stable Beluga"
+  },
+  {
+    "model": "bakllava",
+    "name": "BakLLaVA"
+  },
+  {
+    "model": "wizardlm-uncensored",
+    "name": "WizardLM Uncensored"
+  },
+  {
+    "model": "medllama2",
+    "name": "MedLlama 2"
+  },
+  {
+    "model": "snowflake-arctic-embed",
+    "name": "Snowflake Arctic Embed"
+  },
+  {
+    "model": "yarn-mistral",
+    "name": "Yarn Mistral"
+  },
+  {
+    "model": "moondream",
+    "name": "Moondream"
+  },
+  {
+    "model": "nous-hermes2-mixtral",
+    "name": "Nous Hermes 2 Mixtral"
+  },
+  {
+    "model": "llama-pro",
+    "name": "Llama Pro"
+  },
+  {
+    "model": "meditron",
+    "name": "Meditron"
+  },
+  {
+    "model": "codeup",
+    "name": "CodeUp"
+  },
+  {
+    "model": "deepseek-v2",
+    "name": "DeepSeek V2"
+  },
+  {
+    "model": "nexusraven",
+    "name": "Nexus Raven"
+  },
+  {
+    "model": "everythinglm",
+    "name": "EverythingLM"
+  },
+  {
+    "model": "magicoder",
+    "name": "Magicoder"
+  },
+  {
+    "model": "llava-phi3",
+    "name": "LLaVA Phi 3"
+  },
+  {
+    "model": "stablelm-zephyr",
+    "name": "StableLM Zephyr"
+  },
+  {
+    "model": "codebooga",
+    "name": "CodeBooga"
+  },
+  {
+    "model": "mistrallite",
+    "name": "MistralLite"
+  }
+]
