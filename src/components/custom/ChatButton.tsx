@@ -7,7 +7,7 @@ type LoadingButtonProps = {
   disabled?: boolean;
   onClick?: () => void;
 };
-export const LoadingButton = ({
+export const ChatButton = ({
   loading,
   disabled,
   onClick,
@@ -20,10 +20,12 @@ export const LoadingButton = ({
       disabled={disabled}
     >
       {loading && <LoaderPinwheel className="animate-spin h-5 w-5" />}
-      {!loading && <>
-        <p className="ml-2">Send Message</p>
-        <CornerDownLeft className="size-3.5" />
-      </>}
+      {!loading && (
+        <>
+          <p className="ml-2">Send Message</p>
+          <CornerDownLeft className="size-3.5" />
+        </>
+      )}
     </Button>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -8,52 +8,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Rabbit } from "lucide-react";
-import { Model, Tags } from "@/types/ollama";
-import {useChatStore} from "@/store/chatStore";
-import {useShallow} from "zustand/react/shallow";
+import { useChatStore } from "@/store/chatStore";
+import { useShallow } from "zustand/react/shallow";
+import { useModelsStore } from "@/store/modelsStore.ts";
+
 export const AvailableModels = () => {
-  const [models, setModels] = useState<string[]>([]);
-    const { settings, setSettings } = useChatStore(useShallow((state) => ({
-        settings: state.settings,
-        setSettings: state.setSettings,
-    })));
+  const { settings, setSettings } = useChatStore(
+    useShallow((state) => ({
+      settings: state.settings,
+      setSettings: state.setSettings,
+    })),
+  );
+  const { pulledModels, getPulledModels } = useModelsStore(
+    useShallow((state) => ({
+      pulledModels: state.pulledModels,
+      getPulledModels: state.getPulledModels,
+    })),
+  );
   useEffect(() => {
-    fetch("http://localhost:11434/api/tags")
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch models");
-        return response.json();
-      })
-      .then((data: Tags) => {
-        const mappedModels = data.models.map((obj: Model) => obj.model)
-        if (mappedModels.length === 0) {
-          throw new Error("No models found");
-        }
-        setModels(mappedModels);
-        setSettings({ ...settings, model: mappedModels[0] });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getPulledModels();
   }, []);
   return (
     <div className="grid gap-3">
-      <Label htmlFor="model">Model</Label>
+      <Label htmlFor="modelsSelect">Model</Label>
       <Select
         onValueChange={(value) => {
           if (!value || value === "") return;
           setSettings({ ...settings, model: value });
         }}
-        value={models[0]}
+        value={pulledModels[0]?.model}
+        name="modelsSelect"
       >
         <SelectTrigger
-          id="model"
+          id="modelsSelect"
           className="items-start [&_[data-description]]:hidden"
         >
           <SelectValue placeholder="Select a model" />
         </SelectTrigger>
         <SelectContent>
-          {models?.map((model) => (
-            <SelectItem value={model} key={model}>
+          {pulledModels?.map(({ model }) => (
+            <SelectItem value={model ?? ""} key={model}>
               <div className="flex items-start gap-3 text-muted-foreground">
                 <Rabbit className="size-5" />
                 <div className="grid gap-0.5">

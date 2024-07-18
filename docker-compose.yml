@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  ollama_server:
+    container_name: ollama_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ollama_server:latest
+    restart: on-failure
+    ports:
+      - "11434:11434"

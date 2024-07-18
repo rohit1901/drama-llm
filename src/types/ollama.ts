@@ -1,8 +1,10 @@
+import { ModelResponse } from "ollama";
+
 export type Model = {
   model: string;
   name: string;
   size: number;
-  modified_at: string;
+  modified_at: Date;
   digest: string;
   details: ModelDetails;
 };
@@ -10,14 +12,10 @@ export type ModelDetails = {
   families: string[];
   family: string;
   format: string;
-  parameter_size: number;
+  parameter_size: string;
   parent_model: string;
-  quantization_level: number;
+  quantization_level: string;
 };
 export type Tags = {
-  models: Model[];
-};
-export type Route = {
-  path: string;
-  value: string;
+  models: ModelResponse[];
 };

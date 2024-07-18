@@ -1,8 +1,8 @@
 // global.d.ts
-import { ExternalProvider } from '@ethersproject/providers';
+import { ExternalProvider } from "@ethersproject/providers";
 
 declare global {
-    interface Window {
-        ethereum: ExternalProvider;
-    }
+  interface Window {
+    ethereum: ExternalProvider;
+  }
 }

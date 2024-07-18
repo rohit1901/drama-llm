@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import ollama from "ollama/browser";
+
 type Message = {
   type: "question" | "answer";
   content: string;
@@ -24,7 +25,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   messages: [],
   settings: {
     role: "user",
-    model: "llama3",
+    model: "llama3:latest",
     temperature: 0.4,
     topP: 0.7,
     topK: 0.0,
@@ -36,7 +37,6 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     set({ loading });
   },
   addMessage: async (message) => {
-    console.log(get().settings.model);
     set({ loading: true });
     // Add the message to the store
     set({
@@ -44,31 +44,36 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     });
     // If the message is a question, send it to the chatbot
     if (message.type === "question") {
-      const response = await ollama.chat({
-        model: get().settings.model,
-        messages: get()
-          .messages.filter((message) => message.type === "question")
-          ?.map((question) => ({
-            role: get().settings.role,
-            content: question.content,
-          })),
-        options: {
-          temperature: get().settings.temperature,
-          top_p: get().settings.topP,
-          top_k: get().settings.topK,
-        },
-      });
-      // Add the response to the store after the chatbot responds
-      set({
-        messages: [
-          ...get().messages,
-          {
-            type: "answer",
-            content: response.message.content,
+      try {
+        const response = await ollama.chat({
+          model: get().settings.model,
+          messages: get()
+            .messages.filter((message) => message.type === "question")
+            ?.map((question) => ({
+              role: get().settings.role,
+              content: question.content,
+            })),
+          options: {
+            temperature: get().settings.temperature,
+            top_p: get().settings.topP,
+            top_k: get().settings.topK,
           },
-        ],
-      });
-      set({ loading: false });
+        });
+        // Add the response to the store after the chatbot responds
+        set({
+          messages: [
+            ...get().messages,
+            {
+              type: "answer",
+              content: response.message.content,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        set({ loading: false });
+      }
     }
   },
 }));
