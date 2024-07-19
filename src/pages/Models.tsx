@@ -13,7 +13,7 @@ import { formatDate, isModelPulled } from "@/lib/utils.ts";
 import ollama from "ollama/browser";
 import { LoadingButton } from "@/components/custom/LoadingButton.tsx";
 import { useChatStore } from "@/store/chatStore.ts";
-import { useToast } from "@/components/ui/use-toast.ts";
+import { useToast } from "@/hooks/use-toast.ts";
 //TODO: create a list of models with status for mobile devices
 export const Models = () => {
   const { availableModels, pulledModels, getPulledModels, setPulledModels } =

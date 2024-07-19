@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -19,15 +18,12 @@ export const AvailableModels = () => {
       setSettings: state.setSettings,
     })),
   );
-  const { pulledModels, getPulledModels } = useModelsStore(
+  const { pulledModels } = useModelsStore(
     useShallow((state) => ({
       pulledModels: state.pulledModels,
       getPulledModels: state.getPulledModels,
     })),
   );
-  useEffect(() => {
-    getPulledModels();
-  }, []);
   return (
     <div className="grid gap-3">
       <Label htmlFor="modelsSelect">Model</Label>
