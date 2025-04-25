@@ -53,7 +53,7 @@ export const Chat = () => {
         )}
       </div>
       <div
-        className="mx-1 my-2 inset-x-0 rounded-lg border bg-background"
+        className="mx-1 my-2 inset-x-0 rounded-lg border-accent bg-background"
         x-chunk="dashboard-03-chunk-1"
       >
         <Label htmlFor="message" className="sr-only">
@@ -62,7 +62,7 @@ export const Chat = () => {
         <Textarea
           id="message"
           placeholder="Type your message here..."
-          className="min-h-12 resize-none border-none p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="min-h-12 resize-none p-3 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
           value={message}
           onChange={handleTextareaChange}
           onKeyDown={(e) => {

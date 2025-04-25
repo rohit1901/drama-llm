@@ -2,6 +2,8 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import ollama from "ollama/browser";
 import { Model } from "@/types/ollama.ts";
+import { DisplayStates } from "@/types";
+import { ChatSettings, Message } from "@/store/chatStore";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -66,3 +68,43 @@ export const isModelPulled = (
 ) => {
   return !!pulledModels.find((m) => m.model === model);
 };
+
+/**
+ * Transforms the display state to a boolean value.
+ *
+ * @param {DisplayStates} displayState - The display state to transform.
+ * @returns {boolean} - Returns true if the display state is "enable", otherwise false.
+ */
+export const transformDisplayStates = (displayState?: DisplayStates) => {
+  if (displayState === "enable") return true;
+  return false;
+};
+
+/**
+ * Safely compares two strings using localeCompare.
+ *
+ * @param {string} a - The first string to compare.
+ * @param {string} b - The second string to compare.
+ * @returns {number} A negative number if a < b, 0 if a === b, or a positive number if a > b.
+ */
+export function safeLocaleCompare(a = "", b = ""): number {
+  return a.localeCompare(b);
+}
+
+/**
+ * Maps a message type to its corresponding chat role.
+ *
+ * @param type - The type of the message, which can be either "question" or "answer".
+ * @returns The corresponding chat role, either "user" for "question" or "assistant" for "answer".
+ * @throws {Error} If the provided message type is invalid.
+ */
+export function getRole(type: Message["type"]): ChatSettings["role"] {
+  switch (type) {
+    case "question":
+      return "user";
+    case "answer":
+      return "assistant";
+    default:
+      throw new Error("Invalid message type");
+  }
+}

@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import ollama from "ollama/browser";
+import { getRole } from "@/lib/utils";
 
-type Message = {
+export type Message = {
   type: "question" | "answer";
   content: string;
 };
-type ChatSettings = {
-  role: string;
+export type ChatSettings = {
+  role: "system" | "user" | "assistant";
   model: string;
   temperature: number;
   topP: number;
@@ -43,37 +44,34 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       messages: [...get().messages, message],
     });
     // If the message is a question, send it to the chatbot
-    if (message.type === "question") {
-      try {
-        const response = await ollama.chat({
-          model: get().settings.model,
-          messages: get()
-            .messages.filter((message) => message.type === "question")
-            ?.map((question) => ({
-              role: get().settings.role,
-              content: question.content,
-            })),
-          options: {
-            temperature: get().settings.temperature,
-            top_p: get().settings.topP,
-            top_k: get().settings.topK,
+    if (message.type === "answer") return;
+    try {
+      const response = await ollama.chat({
+        model: get().settings.model,
+        messages: get().messages.map((message) => ({
+          role: getRole(message.type),
+          content: message.content,
+        })),
+        options: {
+          temperature: get().settings.temperature,
+          top_p: get().settings.topP,
+          top_k: get().settings.topK,
+        },
+      });
+      // Add the response to the store after the chatbot responds
+      set({
+        messages: [
+          ...get().messages,
+          {
+            type: "answer",
+            content: response.message.content,
           },
-        });
-        // Add the response to the store after the chatbot responds
-        set({
-          messages: [
-            ...get().messages,
-            {
-              type: "answer",
-              content: response.message.content,
-            },
-          ],
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        set({ loading: false });
-      }
+        ],
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ loading: false });
     }
   },
 }));

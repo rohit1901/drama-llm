@@ -1,4 +1,3 @@
-import { ChatSettings } from "@/components/custom/ChatSettings.tsx";
 import { Chat } from "@/components/custom/Chat.tsx";
 import { useChatStore } from "@/store/chatStore.ts";
 import { useShallow } from "zustand/react/shallow";
@@ -35,15 +34,5 @@ export const ChatPage = () => {
       model: defaultModel,
     });
   }, [pulledModels]);
-  return (
-    <>
-      <div
-        className="relative hidden flex-col items-start gap-8 lg:flex"
-        x-chunk="dashboard-03-chunk-0"
-      >
-        <ChatSettings />
-      </div>
-      <Chat />
-    </>
-  );
+  return <Chat />;
 };
