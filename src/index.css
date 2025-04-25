@@ -49,3 +49,30 @@
         --ring: 224.3 76.3% 48%;
     }
 }
+
+
+
+.scrollbar {
+    @apply overflow-y-auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded;
+}
+
+.scrollbar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+}

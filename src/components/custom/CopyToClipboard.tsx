@@ -18,7 +18,7 @@ export const CopyToClipboard = ({
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       disabled={isCopying}
       size="sm"
       className="ml-auto gap-1.5 text-sm"

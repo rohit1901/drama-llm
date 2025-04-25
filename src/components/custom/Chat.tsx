@@ -23,7 +23,7 @@ export const Chat = () => {
       const { current } = messagesEndRef;
       current.scrollTop = current.scrollHeight;
     }
-  }, [chatStore.messages]); // Dependency array includes chatStore.messages to trigger the effect on message updates
+  }, [chatStore.messages]);
 
   const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -39,7 +39,7 @@ export const Chat = () => {
 
   return (
     <div className="flex-1 p:6 sm:p-4 justify-between flex flex-col max-h-[90vh] min-h-[50vh] bg-muted overflow-hidden rounded-lg">
-      <div className="overflow-y-auto m-1" ref={messagesEndRef}>
+      <div className="overflow-y-auto m-1 scrollbar" ref={messagesEndRef}>
         {chatStore.messages.length === 0 ? (
           <NoMessages />
         ) : (
@@ -53,7 +53,7 @@ export const Chat = () => {
         )}
       </div>
       <div
-        className="mx-1 my-2 inset-x-0 rounded-lg border bg-background"
+        className="mx-1 my-2 inset-x-0 rounded-lg border-accent bg-background"
         x-chunk="dashboard-03-chunk-1"
       >
         <Label htmlFor="message" className="sr-only">
@@ -62,7 +62,7 @@ export const Chat = () => {
         <Textarea
           id="message"
           placeholder="Type your message here..."
-          className="min-h-12 resize-none border-none p-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="min-h-12 resize-none p-3 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
           value={message}
           onChange={handleTextareaChange}
           onKeyDown={(e) => {

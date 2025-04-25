@@ -4,17 +4,28 @@ import {
   TableCaption,
   TableCell,
   TableHead,
+  TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { ArrowDownToLine, Check, Trash2, X } from "lucide-react";
 import { useModelsStore } from "@/store/modelsStore.ts";
 import { useEffect } from "react";
-import { formatDate, isModelPulled } from "@/lib/utils.ts";
+import { formatDate, isModelPulled, safeLocaleCompare } from "@/lib/utils.ts";
 import ollama from "ollama/browser";
 import { LoadingButton } from "@/components/custom/LoadingButton.tsx";
 import { useChatStore } from "@/store/chatStore.ts";
 import { useToast } from "@/hooks/use-toast.ts";
-//TODO: create a list of models with status for mobile devices
+import SafeNameDisplay from "@/components/SafeNameDisplay.tsx";
+import { Model } from "@/types/ollama";
+const sortModels = (
+  pulledModels: Partial<Model>[],
+  availableModels: Partial<Model>[],
+) => [
+  ...pulledModels.sort((a, b) => safeLocaleCompare(a.name, b.name)),
+  ...availableModels
+    .filter(({ model }) => !isModelPulled(pulledModels, model))
+    .sort((a, b) => safeLocaleCompare(a.name, b.name)),
+];
 export const Models = () => {
   const { availableModels, pulledModels, getPulledModels, setPulledModels } =
     useModelsStore((state) => ({
@@ -31,23 +42,28 @@ export const Models = () => {
     getPulledModels();
   }, []);
   const { toast } = useToast();
+  const sortedModels = sortModels(pulledModels, availableModels);
   return (
     <div className="container">
       <Table>
         <TableCaption>Models</TableCaption>
-        <TableRow>
-          <TableHead>Model</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Model</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
         <TableBody>
-          {availableModels.map(({ model, name }) => (
-            <TableRow key={model}>
-              <TableCell>{model}</TableCell>
-              <TableCell>{name}</TableCell>
+          {sortedModels.map(({ model, name }) => (
+            <TableRow key={model || "unknown"}>
+              <TableCell>{model || "Unknown Model"}</TableCell>
               <TableCell>
-                {isModelPulled(pulledModels, model) ? (
+                <SafeNameDisplay name={name} />
+              </TableCell>
+              <TableCell>
+                {isModelPulled(pulledModels, model || "") ? (
                   <Check className="text-green-500" />
                 ) : (
                   <X />
@@ -57,14 +73,14 @@ export const Models = () => {
                 <LoadingButton
                   variant="ghost"
                   size="sm"
-                  disabled={isModelPulled(pulledModels, model)}
+                  disabled={isModelPulled(pulledModels, model || "")}
                   onClick={async () => {
                     if (!model) return;
                     try {
                       await ollama.pull({
                         model,
                       });
-                      setPulledModels([...pulledModels, { model: name }]);
+                      setPulledModels([...pulledModels, { model: name || "" }]);
                       setPulledModels([
                         ...pulledModels,
                         { ...availableModels.find((m) => m.model === model) },
@@ -88,7 +104,7 @@ export const Models = () => {
                 </LoadingButton>
 
                 <LoadingButton
-                  disabled={!isModelPulled(pulledModels, model)}
+                  disabled={!isModelPulled(pulledModels, model || "")}
                   variant="ghost"
                   onClick={async () => {
                     if (!model) return;
