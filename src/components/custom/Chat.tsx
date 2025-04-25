@@ -23,7 +23,7 @@ export const Chat = () => {
       const { current } = messagesEndRef;
       current.scrollTop = current.scrollHeight;
     }
-  }, [chatStore.messages]); // Dependency array includes chatStore.messages to trigger the effect on message updates
+  }, [chatStore.messages]);
 
   const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -39,7 +39,7 @@ export const Chat = () => {
 
   return (
     <div className="flex-1 p:6 sm:p-4 justify-between flex flex-col max-h-[90vh] min-h-[50vh] bg-muted overflow-hidden rounded-lg">
-      <div className="overflow-y-auto m-1" ref={messagesEndRef}>
+      <div className="overflow-y-auto m-1 scrollbar" ref={messagesEndRef}>
         {chatStore.messages.length === 0 ? (
           <NoMessages />
         ) : (

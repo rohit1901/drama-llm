@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Book, Bot, SquareTerminal, X } from "lucide-react";
+import { Book, Bot, SquareTerminal } from "lucide-react";
 import { useLocation } from "boom-router";
 import {
   Drawer,

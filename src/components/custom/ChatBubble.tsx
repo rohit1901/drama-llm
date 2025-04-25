@@ -17,7 +17,7 @@ export const ChatBubble = ({ type, message }: ChatBubbleProps) => {
         className={`sm:max-w-[45vw] ${type === "question" ? "items-start" : "items-end"}`}
       >
         <div
-          className={`flex flex-col justify-between ${type === "question" ? "bg-card" : "bg-slate-300"} rounded-lg border p-4`}
+          className={`flex flex-col justify-between ${type === "question" ? "bg-card" : "bg-slate-300 dark:bg-slate-800"} rounded-lg border p-4`}
         >
           <div className="text-sm">
             <Markdown
