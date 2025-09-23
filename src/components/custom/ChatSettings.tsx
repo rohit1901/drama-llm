@@ -19,7 +19,7 @@ export const ChatSettings = () => {
     setSettings: state.setSettings,
   }));
   return (
-    <form className="grid w-full items-start gap-6">
+    <form className="grid items-center gap-6 overflow-auto p-10">
       <fieldset className="grid gap-6 rounded-lg border p-4">
         <legend className="-ml-1 px-1 text-sm font-medium">Settings</legend>
         <AvailableModels />
@@ -103,6 +103,7 @@ export const ChatSettings = () => {
             name="content"
             placeholder="You are a..."
             className="min-h-[9.5rem]"
+            value={settings.prompt}
           />
         </div>
       </fieldset>

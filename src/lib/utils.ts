@@ -1,9 +1,9 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import ollama from "ollama/browser";
-import { Model } from "@/types/ollama.ts";
+import { Message } from "@/store/chatStore";
 import { DisplayStates } from "@/types";
-import { ChatSettings, Message } from "@/store/chatStore";
+import { Model, Role } from "@/types/ollama.ts";
+import { type ClassValue, clsx } from "clsx";
+import ollama from "ollama/browser";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -104,7 +104,7 @@ export function safeLocaleCompare(a = "", b = ""): number {
  * @returns The corresponding chat role, either "user" for "question" or "assistant" for "answer".
  * @throws {Error} If the provided message type is invalid.
  */
-export function getRole(type: Message["type"]): ChatSettings["role"] {
+export function getRole(type: Message["type"]): Role {
   switch (type) {
     case "question":
       return "user";

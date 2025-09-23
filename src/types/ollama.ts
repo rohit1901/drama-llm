@@ -1,5 +1,6 @@
 import { ModelResponse } from "ollama";
 
+export type Role = "system" | "user" | "assistant";
 export type Model = {
   model: string;
   name: string;

@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Book, Bot, SquareTerminal } from "lucide-react";
+import { Book, Bot, Settings, SquareTerminal } from "lucide-react";
 import { useLocation } from "boom-router";
 import {
   Drawer,
@@ -15,18 +15,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Textarea } from "@/components/ui/textarea";
-import { Settings } from "lucide-react";
-import { AvailableModels } from "@/components/custom/AvailableModels";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ChatSettings } from "./ChatSettings";
 
 export const MainNavigation = () => {
   const [location, setLocation] = useLocation();
@@ -101,48 +90,7 @@ export const MainNavigation = () => {
                 Configure the settings for the model and messages.
               </DrawerDescription>
             </DrawerHeader>
-            <form className="grid items-center gap-6 overflow-auto p-10">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Settings
-                </legend>
-                <AvailableModels />
-                <div className="grid gap-3">
-                  <Label htmlFor="temperature">Temperature</Label>
-                  <Input id="temperature" type="number" placeholder="0.4" />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="top-p">Top P</Label>
-                  <Input id="top-p" type="number" placeholder="0.7" />
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="top-k">Top K</Label>
-                  <Input id="top-k" type="number" placeholder="0.0" />
-                </div>
-              </fieldset>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
-                </legend>
-                <div className="grid gap-3">
-                  <Label htmlFor="role">Role</Label>
-                  <Select defaultValue="system">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="system">System</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="content">Content</Label>
-                  <Textarea id="content" placeholder="You are a..." />
-                </div>
-              </fieldset>
-            </form>
+            <ChatSettings />
           </DrawerContent>
         </Drawer>
       ) : null}

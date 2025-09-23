@@ -1,5 +1,5 @@
-import { ChatSettings } from "@/store/chatStore";
+import { Role } from "@/types/ollama";
 
-export const isRole = (value: unknown): value is ChatSettings["role"] => {
+export const isRole = (value: unknown): value is Role => {
   return value === "user" || value === "system" || value === "assistant";
 };
