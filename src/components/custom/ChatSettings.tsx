@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useChatStore } from "@/store/chatStore";
+import { isFieldEmpty } from "@/lib/utils";
+import { isRole } from "@/lib/type.guards";
 
 export const ChatSettings = () => {
   const { settings, setSettings } = useChatStore((state) => ({
@@ -80,7 +82,7 @@ export const ChatSettings = () => {
             name="role"
             value={settings.role}
             onValueChange={(value) => {
-              if (!value || value === "") return;
+              if (isFieldEmpty(value) || !isRole(value)) return;
               setSettings({ ...settings, role: value });
             }}
           >

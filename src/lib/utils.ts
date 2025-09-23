@@ -11,6 +11,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export const isFieldEmpty = (value: string) => value.trim() === "";
 export const isArrayEmpty = (value: unknown[]) => value.length === 0;
+export const isFieldBlank = (value: string) => value.trim() === " ";
+export const isFieldEmptyOrBlank = (value: string | null) =>
+  value === null ||
+  value === undefined ||
+  isFieldBlank(value) ||
+  isFieldEmpty(value);
 export const formatDate = (date?: string, time = true) => {
   // Create a new Date object
   const convertedDate = new Date(date ?? new Date());
@@ -28,7 +34,7 @@ export const formatDate = (date?: string, time = true) => {
 };
 /**
  * Copy text to clipboard
- * @param text {string} - The text to copy to clipboard
+ * @param text - The text to copy to clipboard
  */
 export const copyToClipboard = async (text: string) => {
   try {
@@ -72,8 +78,8 @@ export const isModelPulled = (
 /**
  * Transforms the display state to a boolean value.
  *
- * @param {DisplayStates} displayState - The display state to transform.
- * @returns {boolean} - Returns true if the display state is "enable", otherwise false.
+ * @param displayState - The display state to transform.
+ * @returns Returns true if the display state is "enable", otherwise false.
  */
 export const transformDisplayStates = (displayState?: DisplayStates) => {
   if (displayState === "enable") return true;
@@ -83,9 +89,9 @@ export const transformDisplayStates = (displayState?: DisplayStates) => {
 /**
  * Safely compares two strings using localeCompare.
  *
- * @param {string} a - The first string to compare.
- * @param {string} b - The second string to compare.
- * @returns {number} A negative number if a < b, 0 if a === b, or a positive number if a > b.
+ * @param a - The first string to compare.
+ * @param b - The second string to compare.
+ * @returns A negative number if a < b, 0 if a === b, or a positive number if a > b.
  */
 export function safeLocaleCompare(a = "", b = ""): number {
   return a.localeCompare(b);
