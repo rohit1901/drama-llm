@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --always-fetch
+RUN npm install
 COPY . .
 RUN npm run build && npm run preview
 EXPOSE 4173
