@@ -1,3 +1,5 @@
+
+# Refactor this Dockerfile. AI!
 FROM node:lts-alpine
 WORKDIR /app
 COPY package*.json ./
