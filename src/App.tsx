@@ -3,9 +3,15 @@ import { UserLogin } from "@/pages/UserLogin";
 import { Route, Switch } from "boom-router";
 import { ChatPage } from "@/pages/ChatPage.tsx";
 import { Models } from "@/pages/Models.tsx";
-import useLogin from "./hooks/use-login";
+import useLogin from "@/hooks/use-login";
+import { useOllama } from "@/hooks/use-ollama";
+import ErrorPage from "@/pages/ErrorPage";
 const App = () => {
   const { isAuthenticated } = useLogin();
+  const isOllamaRunning = useOllama();
+  if (!isOllamaRunning) {
+    return null;
+  }
   if (!isAuthenticated) {
     return <UserLogin />;
   }
@@ -24,6 +30,11 @@ const App = () => {
       <Route path="/models">
         <Dashboard>
           <Models />
+        </Dashboard>
+      </Route>
+      <Route path="/error">
+        <Dashboard>
+          <ErrorPage />
         </Dashboard>
       </Route>
     </Switch>

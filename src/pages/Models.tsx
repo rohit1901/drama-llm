@@ -8,14 +8,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowDownToLine, Check, Trash2, X } from "lucide-react";
-import { useModelsStore } from "@/store/modelsStore.ts";
+import { useModelsStore } from "@/store/modelsStore";
 import { useEffect } from "react";
-import { formatDate, isModelPulled, safeLocaleCompare } from "@/lib/utils.ts";
+import { formatDate, isModelPulled, safeLocaleCompare } from "@/lib/utils";
 import ollama from "ollama/browser";
-import { LoadingButton } from "@/components/custom/LoadingButton.tsx";
-import { useChatStore } from "@/store/chatStore.ts";
-import { useToast } from "@/hooks/use-toast.ts";
-import SafeNameDisplay from "@/components/SafeNameDisplay.tsx";
+import { LoadingButton } from "@/components/custom/LoadingButton";
+import { useChatStore } from "@/store/chatStore";
+import { useToast } from "@/hooks/use-toast";
+import SafeNameDisplay from "@/components/SafeNameDisplay";
 import { Model } from "@/types/ollama";
 const sortModels = (
   pulledModels: Partial<Model>[],

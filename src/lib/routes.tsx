@@ -3,7 +3,7 @@ import { ChatPage } from "@/pages/ChatPage.tsx";
 import { Models } from "@/pages/Models.tsx";
 
 export type Route = {
-  path: string;
+  path: "/" | "/chat" | "/models";
   value: string;
   component: ReactNode;
 };
