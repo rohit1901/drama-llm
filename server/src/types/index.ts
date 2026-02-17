@@ -40,7 +40,7 @@ export interface ConversationSettings {
   topK?: number;
   role?: string;
   prompt?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ConversationCreateInput {
@@ -64,7 +64,7 @@ export interface ConversationWithCount extends Conversation {
 export interface Message {
   id: string;
   conversation_id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   created_at: Date;
   updated_at: Date;
@@ -76,12 +76,12 @@ export interface MessageMetadata {
   tokens?: number;
   duration_ms?: number;
   model?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface MessageCreateInput {
   conversation_id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   metadata?: MessageMetadata;
 }
@@ -134,7 +134,7 @@ export interface SessionCreateInput {
 }
 
 export interface AuthResponse {
-  user: Omit<User, 'password_hash'>;
+  user: Omit<User, "password_hash">;
   token: string;
   expires_at: Date;
 }
@@ -157,7 +157,7 @@ export interface TokenPayload {
   exp?: number;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -168,7 +168,7 @@ export interface PaginationParams {
   page?: number;
   limit?: number;
   sort_by?: string;
-  sort_order?: 'asc' | 'desc';
+  sort_order?: "asc" | "desc";
 }
 
 export interface PaginatedResponse<T> {
@@ -208,7 +208,7 @@ export interface UpdateConversationRequest {
 }
 
 export interface CreateMessageRequest {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
 }
 
@@ -217,8 +217,8 @@ export interface GetConversationsQuery {
   limit?: number;
   search?: string;
   model?: string;
-  sort_by?: 'created_at' | 'updated_at' | 'title';
-  sort_order?: 'asc' | 'desc';
+  sort_by?: "created_at" | "updated_at" | "title";
+  sort_order?: "asc" | "desc";
 }
 
 export interface GetMessagesQuery {
@@ -233,7 +233,11 @@ export class AppError extends Error {
   statusCode: number;
   isOperational: boolean;
 
-  constructor(message: string, statusCode: number = 500, isOperational: boolean = true) {
+  constructor(
+    message: string,
+    statusCode: number = 500,
+    isOperational: boolean = true,
+  ) {
     super(message);
     this.statusCode = statusCode;
     this.isOperational = isOperational;
@@ -248,25 +252,25 @@ export class ValidationError extends AppError {
 }
 
 export class AuthenticationError extends AppError {
-  constructor(message: string = 'Authentication failed') {
+  constructor(message: string = "Authentication failed") {
     super(message, 401);
   }
 }
 
 export class AuthorizationError extends AppError {
-  constructor(message: string = 'Unauthorized access') {
+  constructor(message: string = "Unauthorized access") {
     super(message, 403);
   }
 }
 
 export class NotFoundError extends AppError {
-  constructor(message: string = 'Resource not found') {
+  constructor(message: string = "Resource not found") {
     super(message, 404);
   }
 }
 
 export class ConflictError extends AppError {
-  constructor(message: string = 'Resource conflict') {
+  constructor(message: string = "Resource conflict") {
     super(message, 409);
   }
 }

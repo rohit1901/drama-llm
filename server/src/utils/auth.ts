@@ -109,6 +109,7 @@ export function isValidPassword(password: string): {
 export function sanitizeUser<T extends { password_hash?: string }>(
   user: T,
 ): Omit<T, "password_hash"> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password_hash, ...sanitized } = user;
   return sanitized;
 }
@@ -147,7 +148,7 @@ export function isExpired(date: Date): boolean {
 /**
  * Parse JWT token without verification (for debugging)
  */
-export function decodeToken(token: string): any {
+export function decodeToken(token: string): unknown {
   try {
     return jwt.decode(token);
   } catch (error) {

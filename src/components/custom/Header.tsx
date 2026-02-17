@@ -24,7 +24,7 @@ export const Header = () => {
         title: "Logged out",
         description: "You have been successfully logged out",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Logout error:", error);
       // Clear local state even if API call fails
       apiClient.setToken(null);

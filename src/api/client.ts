@@ -3,7 +3,7 @@
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -24,7 +24,7 @@ export class ApiError extends Error {
   constructor(
     message: string,
     public statusCode?: number,
-    public errors?: any[],
+    public errors?: unknown[],
   ) {
     super(message);
     this.name = "ApiError";
@@ -93,12 +93,12 @@ class ApiClient {
       return await response.json();
     }
 
-    return response.text() as any;
+    return response.text() as T;
   }
 
   public async get<T>(
     endpoint: string,
-    params?: Record<string, any>,
+    params?: Record<string, unknown>,
   ): Promise<T> {
     const url = new URL(`${this.baseUrl}${endpoint}`);
 
@@ -120,7 +120,7 @@ class ApiClient {
 
   public async post<T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     contentType: string = "application/json",
   ): Promise<T> {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -134,7 +134,7 @@ class ApiClient {
 
   public async put<T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     contentType: string = "application/json",
   ): Promise<T> {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -157,7 +157,7 @@ class ApiClient {
 
   public async patch<T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     contentType: string = "application/json",
   ): Promise<T> {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {

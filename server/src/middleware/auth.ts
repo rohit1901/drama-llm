@@ -5,11 +5,9 @@ import { User, AuthenticationError, AuthorizationError } from "../types/index";
 import logger from "../utils/logger";
 
 // Extend Express Request type to include user
-declare global {
-  namespace Express {
-    interface Request {
-      user?: Omit<User, "password_hash">;
-    }
+declare module "express-serve-static-core" {
+  interface Request {
+    user?: Omit<User, "password_hash">;
   }
 }
 
