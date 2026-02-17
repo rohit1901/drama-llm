@@ -69,8 +69,8 @@ test_backend_health() {
     print_test "Testing Backend Health"
 
     if response=$(curl -s -w "\n%{http_code}" "$BACKEND_URL/health" 2>/dev/null); then
-        http_code=$(echo "$response" | tail -n1)
-        body=$(echo "$response" | head -n-1)
+        http_code=$(echo "$response" | tail -n 1)
+        body=$(echo "$response" | sed '$d')
 
         if [ "$http_code" = "200" ]; then
             print_success "Backend is healthy"
@@ -171,7 +171,7 @@ test_api_endpoints() {
     # Test auth endpoints
     echo "   Auth endpoints:"
     if response=$(curl -s -w "\n%{http_code}" "$BACKEND_URL/api/auth/me" 2>/dev/null); then
-        http_code=$(echo "$response" | tail -n1)
+        http_code=$(echo "$response" | tail -n 1)
         if [ "$http_code" = "401" ] || [ "$http_code" = "200" ]; then
             print_info "${GREEN}✓${NC} /api/auth/me (HTTP $http_code)"
         else
@@ -184,7 +184,7 @@ test_api_endpoints() {
     # Test conversations endpoint (should return 401 without auth)
     echo "   Conversations endpoints:"
     if response=$(curl -s -w "\n%{http_code}" "$BACKEND_URL/api/conversations" 2>/dev/null); then
-        http_code=$(echo "$response" | tail -n1)
+        http_code=$(echo "$response" | tail -n 1)
         if [ "$http_code" = "401" ] || [ "$http_code" = "200" ]; then
             print_info "${GREEN}✓${NC} /api/conversations (HTTP $http_code)"
         else
@@ -194,18 +194,8 @@ test_api_endpoints() {
         print_info "${RED}✗${NC} /api/conversations (unreachable)"
     fi
 
-    # Test models endpoint
-    echo "   Models endpoints:"
-    if response=$(curl -s -w "\n%{http_code}" "$BACKEND_URL/api/models" 2>/dev/null); then
-        http_code=$(echo "$response" | tail -n1)
-        if [ "$http_code" = "200" ] || [ "$http_code" = "401" ]; then
-            print_info "${GREEN}✓${NC} /api/models (HTTP $http_code)"
-        else
-            print_info "${RED}✗${NC} /api/models (HTTP $http_code)"
-        fi
-    else
-        print_info "${RED}✗${NC} /api/models (unreachable)"
-    fi
+    # Note: Models endpoint is handled by frontend directly via Ollama
+    # Backend doesn't have a models endpoint
 
     print_success "API endpoints tested"
     echo ""
@@ -225,8 +215,8 @@ test_auth_flow() {
         -d "{\"email\":\"$RANDOM_EMAIL\",\"password\":\"$RANDOM_PASSWORD\",\"username\":\"TestUser\"}" \
         -w "\n%{http_code}" 2>/dev/null); then
 
-        http_code=$(echo "$response" | tail -n1)
-        body=$(echo "$response" | head -n-1)
+        http_code=$(echo "$response" | tail -n 1)
+        body=$(echo "$response" | sed '$d')
 
         if [ "$http_code" = "201" ] || [ "$http_code" = "200" ]; then
             print_info "${GREEN}✓${NC} Registration successful"
@@ -243,7 +233,7 @@ test_auth_flow() {
                     if auth_response=$(curl -s -w "\n%{http_code}" "$BACKEND_URL/api/auth/me" \
                         -H "Authorization: Bearer $TOKEN" 2>/dev/null); then
 
-                        auth_code=$(echo "$auth_response" | tail -n1)
+                        auth_code=$(echo "$auth_response" | tail -n 1)
                         if [ "$auth_code" = "200" ]; then
                             print_info "${GREEN}✓${NC} Authentication working"
                         fi
