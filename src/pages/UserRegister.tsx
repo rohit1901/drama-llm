@@ -15,40 +15,69 @@ import { useState, FormEvent } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "boom-router";
 
-export function UserLogin() {
+export function UserRegister() {
   const setAuthenticated = useAppStore().setAuthenticated;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: "Passwords do not match",
+      });
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 8) {
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: "Password must be at least 8 characters long",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // Call backend login API
-      const response = await authService.login({ email, password });
+      // Call backend register API
+      const response = await authService.register({
+        email,
+        password,
+        username: username.trim() || undefined,
+      });
 
-      // Authentication successful
+      // Registration successful - user is now authenticated
       setAuthenticated(true);
 
       toast({
-        title: "Login successful",
-        description: `Welcome back, ${response.user.email}!`,
+        title: "Registration successful",
+        description: `Welcome, ${response.user.email}!`,
       });
 
       // Navigate to home page
       window.location.href = "/";
     } catch (error) {
-      // Authentication failed
-      console.error("Login error:", error);
+      // Registration failed
+      console.error("Registration error:", error);
 
       toast({
         variant: "destructive",
-        title: "Login failed",
+        title: "Registration failed",
         description:
-          error instanceof Error ? error.message : "Invalid email or password",
+          error instanceof Error
+            ? error.message
+            : "Unable to create account. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -56,19 +85,17 @@ export function UserLogin() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-full bg-background ">
+    <div className="flex items-center justify-center h-screen w-full bg-background">
       <Card className="w-full border-0 shadow-none sm:border sm:shadow max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl flex">
             <Origami className="w-8 h-8 mr-2 fill-primary" />
             <div className="flex justify-between">
-              <p>Login to</p>
+              <p>Register for</p>
               <pre className="ml-2 text-primary">drama-llm</pre>
             </div>
           </CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Create a new account to get started</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <form className="grid gap-4" onSubmit={handleSubmit}>
@@ -85,24 +112,52 @@ export function UserLogin() {
               />
             </div>
             <div className="grid gap-2">
+              <Label htmlFor="username">Username (optional)</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
+                minLength={3}
+                maxLength={100}
+              />
+            </div>
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
+                placeholder="At least 8 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
                 required
+                minLength={8}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="Re-enter your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={loading}
+                required
+                minLength={8}
               />
             </div>
             <Button className="w-full" type="submit" disabled={loading}>
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "Creating account..." : "Create account"}
             </Button>
           </form>
           <div className="text-center text-sm">
-            Don't have an account?{" "}
-            <Link href="/register" className="text-primary hover:underline">
-              Create account
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary hover:underline">
+              Sign in
             </Link>
           </div>
         </CardContent>

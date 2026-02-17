@@ -48,14 +48,7 @@ export function ConversationsList() {
   const fetchConversations = useCallback(async () => {
     try {
       setLoading(true);
-      console.log("🔍 Fetching conversations...");
       const data = await conversationsService.getAllConversations();
-      console.log("📦 Received data:", data);
-      console.log("📊 Data type:", typeof data);
-      console.log(
-        "📏 Data length:",
-        Array.isArray(data) ? data.length : "NOT AN ARRAY",
-      );
       setConversations(data);
     } catch (error) {
       console.error("❌ Failed to fetch conversations:", error);

@@ -1,5 +1,6 @@
 import { Dashboard } from "@/pages/Dashboard";
 import { UserLogin } from "@/pages/UserLogin";
+import { UserRegister } from "@/pages/UserRegister";
 import { Route, Switch } from "boom-router";
 import { ChatPage } from "@/pages/ChatPage.tsx";
 import { Models } from "@/pages/Models.tsx";
@@ -32,9 +33,18 @@ const App = () => {
     return <ErrorPage />;
   }
 
-  // 3️⃣ If not authenticated → prompt login
+  // 3️⃣ If not authenticated → show login/register routes
   if (!isAuthenticated) {
-    return <UserLogin />;
+    return (
+      <Switch>
+        <Route path="/register">
+          <UserRegister />
+        </Route>
+        <Route path="*">
+          <UserLogin />
+        </Route>
+      </Switch>
+    );
   }
 
   // 4️⃣ Authenticated and Ollama running → render the app routes

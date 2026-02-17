@@ -1,0 +1,31 @@
+{
+  "name": "drama-llm-server",
+  "version": "1.0.0",
+  "description": "Backend API server for Drama LLM with PostgreSQL persistence",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "ollama",
+    "llm",
+    "chat",
+    "api",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.14.10",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0",
+    "uuid": "^9.0.1",
+    "winston": "^3.13.0"
+  }
+}

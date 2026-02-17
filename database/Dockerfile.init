@@ -1,0 +1,31 @@
+FROM postgres:16-alpine
+
+# Install Node.js for running init scripts
+RUN apk add --no-cache nodejs npm
+
+# Set working directory
+WORKDIR /init
+
+# Copy package files for dependencies
+COPY package*.json ./
+
+# Install only the pg dependency
+RUN npm install pg
+
+# Copy database initialization script
+COPY scripts/init-db.js ./
+COPY database/schema.sql ./schema.sql
+
+# Copy entrypoint script
+COPY database/init-entrypoint.sh /init-entrypoint.sh
+RUN chmod +x /init-entrypoint.sh
+
+# Set environment variables
+ENV DB_HOST=postgres
+ENV DB_PORT=5432
+ENV DB_USER=postgres
+ENV DB_PASSWORD=postgres
+ENV DB_NAME=drama_llm
+
+# Run initialization
+ENTRYPOINT ["/init-entrypoint.sh"]

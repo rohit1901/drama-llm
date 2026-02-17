@@ -22,7 +22,9 @@ Drama LLM is a complete full-stack application for interacting with Ollama langu
 ✅ **Session Management** - Track and manage active sessions  
 ✅ **Dark/Light Mode** - Theme support with system preference detection  
 ✅ **Error Handling** - Graceful error recovery with user-friendly messages  
-✅ **RESTful API** - 22 endpoints for complete backend integration
+✅ **RESTful API** - 22 endpoints for complete backend integration  
+✅ **Automated Scripts** - Version management, testing, and deployment automation  
+✅ **Docker Support** - Complete containerized setup with database
 
 ---
 
@@ -63,7 +65,87 @@ Drama LLM is a complete full-stack application for interacting with Ollama langu
 - PostgreSQL running (Docker container available)
 - Ollama installed and running on `localhost:11434`
 
-### Installation
+### Option 1: Docker (Easiest - Recommended)
+
+Run everything in Docker containers with one command:
+
+```bash
+# Clone the repository
+git clone https://github.com/rohit1901/drama-llm.git
+cd drama-llm
+
+# Start everything (PostgreSQL + Backend + Frontend)
+make quick-docker
+
+# Wait for initialization (~30 seconds)
+# Then open: http://localhost:4173
+
+# Login with default credentials:
+# Email: admin@drama-llm.local
+# Password: admin123
+```
+
+**What you get:**
+- ✅ PostgreSQL database (automatically initialized)
+- ✅ Backend API server
+- ✅ Frontend application
+- ✅ Persistent data storage
+- ✅ Health checks for all services
+- ✅ No local setup required!
+
+**Useful Docker commands:**
+```bash
+make docker-ps         # Check status
+make docker-logs       # View logs
+make docker-stop       # Stop containers
+make docker-db-backup  # Backup database
+```
+
+See [DOCKER_SETUP.md](./DOCKER_SETUP.md) for complete Docker documentation.
+
+---
+
+### Option 2: Docker Database + Local Development
+
+Use PostgreSQL in Docker, but run backend/frontend locally:
+
+```bash
+# Start only PostgreSQL in Docker
+make quick-docker-db
+
+# Now run local development
+make dev-backend    # Terminal 1
+make dev-frontend   # Terminal 2
+```
+
+**Connection details:**
+- Host: `localhost`
+- Port: `5432`
+- Database: `drama_llm`
+- User: `postgres`
+- Password: `postgres`
+
+---
+
+### Option 3: Full Local Setup
+
+Install and run everything locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/rohit1901/drama-llm.git
+cd drama-llm
+
+# Quick start (installs deps + initializes database)
+make quick-start
+
+# Start services in separate terminals
+make dev-backend    # Terminal 1
+make dev-frontend   # Terminal 2
+ollama serve        # Terminal 3
+```
+
+### Manual Installation
 
 1. **Clone the repository**
    ```bash
@@ -71,44 +153,42 @@ Drama LLM is a complete full-stack application for interacting with Ollama langu
    cd drama-llm
    ```
 
-2. **Install frontend dependencies**
+2. **Install dependencies**
    ```bash
    npm install
+   cd server && npm install && cd ..
    ```
 
-3. **Set up backend**
+3. **Configure environment variables**
    ```bash
-   cd server
-   npm install
-   mkdir -p logs
+   cp .env.example .env
+   nano .env
    ```
-
-4. **Configure environment variables**
    
    Frontend `.env`:
    ```env
-   DRAMA_LLM_SECURITY=disable
    VITE_API_URL=http://localhost:3001/api
+   VITE_OLLAMA_URL=http://localhost:11434
    ```
    
    Backend `server/.env`:
    ```env
-   DATABASE_URL=postgres://admin:PASSWORD@localhost:5432/drama_llm
+   DATABASE_URL=postgres://postgres:postgres@localhost:5432/drama_llm
    PORT=3001
    JWT_SECRET=your-super-secret-jwt-key
    CORS_ORIGIN=http://localhost:5173
    ```
 
-5. **Set up database**
+4. **Initialize database**
    ```bash
-   # Create database
-   docker exec nt-keystone-cms-db-1 psql -U admin -d postgres -c "CREATE DATABASE drama_llm;"
+   # Automated script (recommended)
+   npm run db:init
    
-   # Apply schema
-   docker exec -i nt-keystone-cms-db-1 psql -U admin -d drama_llm < database/schema.sql
+   # Or using Make
+   make db-init
    ```
 
-6. **Start the application**
+5. **Start the application**
    
    Terminal 1 - Backend:
    ```bash
@@ -121,15 +201,220 @@ Drama LLM is a complete full-stack application for interacting with Ollama langu
    npm run dev
    ```
 
-7. **Open your browser**
+6. **Open your browser**
    - Frontend: `http://localhost:5173`
    - Backend API: `http://localhost:3001/api`
    - Health Check: `http://localhost:3001/health`
 
-8. **Login with default credentials**
+7. **Login with default credentials**
    - Email: `admin@drama-llm.local`
    - Password: `admin123`
    - ⚠️ **Change immediately in production!**
+
+---
+
+## 🛠️ Scripts & Automation
+
+### Available Scripts
+
+#### NPM Scripts
+```bash
+# Development
+npm run dev              # Start frontend dev server
+npm run build            # Build for production
+npm run preview          # Preview production build
+npm run lint             # Run ESLint
+npm run format           # Format code with Prettier
+npm run type-check       # TypeScript type checking
+
+# Testing
+npm test                 # Run all tests
+npm run test:unit        # Unit tests (lint + type-check)
+npm run test:integration # Integration tests
+npm run test:e2e         # End-to-end tests
+
+# Version Management
+npm run version:patch    # 2.1.0 -> 2.1.1 (bug fixes)
+npm run version:minor    # 2.1.0 -> 2.2.0 (new features)
+npm run version:major    # 2.1.0 -> 3.0.0 (breaking changes)
+
+# Database
+npm run db:init          # Initialize database (creates if not exists)
+npm run db:migrate       # Run migrations
+npm run db:seed          # Seed test data
+
+# Docker
+npm run docker:build     # Build Docker images
+npm run docker:run       # Start containers
+npm run docker:stop      # Stop containers
+npm run docker:logs      # View logs
+```
+
+#### Make Commands (Recommended)
+```bash
+# Quick Actions
+make help                # Show all commands
+make quick-start         # Install deps + init database
+make quick-docker        # Build and start Docker
+make quick-test          # Lint + type-check + integration tests
+
+# Development
+make dev-frontend        # Start frontend
+make dev-backend         # Start backend
+make lint                # Run linter
+make format              # Format code
+make type-check          # Type checking
+
+# Testing
+make test                # Run all tests
+make test-integration    # Integration tests
+make test-docker         # Test Docker environment
+
+# Database
+make db-init             # Initialize database
+make db-migrate          # Run migrations
+make db-seed             # Seed data
+make db-reset            # Drop and recreate database
+make db-backup           # Backup to file
+make db-restore          # Restore from backup
+
+# Docker
+make docker-build        # Build images
+make docker-run          # Start containers
+make docker-stop         # Stop containers
+make docker-logs         # Show logs
+make docker-exec-backend # Shell in backend container
+
+# Version Management
+make version-patch       # Bump patch version
+make version-minor       # Bump minor version
+make version-major       # Bump major version
+
+# Utilities
+make status              # Show service status
+make urls                # Show all service URLs
+make clean               # Remove build artifacts
+```
+
+### Database Initialization
+
+The `db:init` script intelligently handles database setup:
+
+✅ **Checks if database exists** - Skips creation if already present  
+✅ **Creates database** - Only if it doesn't exist  
+✅ **Applies schema** - Sets up all tables, indexes, and functions  
+✅ **Verifies setup** - Confirms tables were created  
+✅ **Creates default admin** - Sets up admin@drama-llm.local  
+✅ **Graceful error handling** - Clear error messages with solutions
+
+```bash
+# Initialize database
+npm run db:init
+
+# With custom credentials
+DB_USER=myuser DB_PASSWORD=mypass npm run db:init
+
+# Using Make
+make db-init
+```
+
+### Version Management
+
+Automated version bumping with changelog updates:
+
+```bash
+# Bump version (runs tests first)
+npm run version:patch   # Bug fixes
+npm run version:minor   # New features
+npm run version:major   # Breaking changes
+
+# Automatically:
+# 1. Runs all tests
+# 2. Bumps version in package.json
+# 3. Updates CHANGELOG.md with template
+# 4. Creates git commit
+# 5. Creates git tag
+# 6. Pushes to repository
+
+# Using Make
+make version-patch
+make version-minor
+make version-major
+```
+
+### Testing Workflow
+
+```bash
+# Quick test (lint + type-check + integration)
+make quick-test
+
+# Individual tests
+npm run test:unit
+npm run test:integration
+npm run test:e2e
+
+# Docker testing
+make docker-build
+make docker-run
+TEST_MODE=docker npm run test:integration
+```
+
+### Docker Workflow
+
+```bash
+# Start everything
+make quick-docker
+
+# Or manually
+docker-compose up -d
+
+# Check status
+docker-compose ps
+make status
+
+# View logs
+make docker-logs
+docker-compose logs -f backend
+
+# Shell access
+make docker-exec-backend
+docker-compose exec postgres psql -U postgres -d drama_llm
+
+# Stop and clean
+make docker-stop
+make docker-clean
+```
+
+### Useful Commands
+
+```bash
+# Check everything is running
+make status
+
+# Show all service URLs
+make urls
+
+# Run full test suite
+make test
+
+# Format and lint
+make format && make lint
+
+# Backup database before changes
+make db-backup
+
+# Reset database if needed
+make db-reset
+
+# Get help
+make help
+```
+
+For detailed documentation, see:
+- `DOCKER_SETUP.md` - Complete Docker guide
+- `scripts/README.md` - Complete scripts documentation
+- `SCRIPTS_QUICK_REFERENCE.md` - Quick command reference
+- `TESTING_GUIDE.md` - Testing procedures
 
 ---
 

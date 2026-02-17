@@ -104,23 +104,11 @@ class ConversationsService {
   async getConversations(
     params?: GetConversationsParams,
   ): Promise<PaginatedResponse<ConversationWithCount>> {
-    console.log("🔵 getConversations called with params:", params);
     const response = await apiClient.get<
       ApiResponse<PaginatedResponse<ConversationWithCount>>
     >("/conversations", params);
 
-    console.log("🔵 getConversations raw response:", response);
-    console.log("🔵 response.success:", response.success);
-    console.log("🔵 response.data:", response.data);
-    console.log("🔵 response.data type:", typeof response.data);
-    console.log("🔵 response.data is array?:", Array.isArray(response.data));
-    console.log("🔵 response.data.data:", response.data?.data);
-    console.log("🔵 response.error:", response.error);
-
     if (response.success && response.data) {
-      // The backend returns: { success: true, data: [...], pagination: {...} }
-      // So response.data is already the array, not a nested object
-      console.log("🔵 Returning response.data:", response.data);
       return response.data;
     }
 
@@ -300,20 +288,11 @@ class ConversationsService {
    * Get all conversations (without pagination, for sidebar)
    */
   async getAllConversations(): Promise<ConversationWithCount[]> {
-    console.log("🟢 getAllConversations called");
     const paginatedResponse = await this.getConversations({ limit: 100 });
-    console.log("🟢 getAllConversations received response:", paginatedResponse);
-    console.log("🟢 Type:", typeof paginatedResponse);
-    console.log("🟢 Is array:", Array.isArray(paginatedResponse));
-
-    // getConversations returns response.data which is already the array
-    // The backend wraps it in ApiResponse, but we unwrap it in getConversations
     if (Array.isArray(paginatedResponse)) {
-      console.log("🟢 Returning array directly:", paginatedResponse);
       return paginatedResponse as ConversationWithCount[];
     }
 
-    console.log("🟢 Returning empty array - unexpected response type");
     return [];
   }
 
