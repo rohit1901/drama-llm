@@ -1,4 +1,5 @@
 import { Chat } from "@/components/custom/Chat.tsx";
+import { ConversationsList } from "@/components/custom/ConversationsList";
 import { useChatStore } from "@/store/chatStore.ts";
 import { useShallow } from "zustand/react/shallow";
 import { useModelsStore } from "@/store/modelsStore.ts";
@@ -20,9 +21,12 @@ export const ChatPage = () => {
     })),
   );
   const [, setLocation] = useLocation();
+
   useEffect(() => {
     getPulledModels();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     if (pulledModels.length === 0) {
       setLocation("/models");
@@ -33,6 +37,20 @@ export const ChatPage = () => {
       ...settings,
       model: defaultModel,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pulledModels]);
-  return <Chat />;
+
+  return (
+    <div className="flex flex-1 gap-4 h-full">
+      {/* Conversations Sidebar */}
+      <div className="w-80 flex-shrink-0">
+        <ConversationsList />
+      </div>
+
+      {/* Chat Area */}
+      <div className="flex-1 min-w-0">
+        <Chat />
+      </div>
+    </div>
+  );
 };
